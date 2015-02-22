@@ -6,7 +6,11 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.ExpandableListAdapter;
 import android.widget.ExpandableListView;
+import android.util.Log;
 import android.widget.Toast;
+
+import com.couchbase.lite.Manager;
+import com.couchbase.lite.android.AndroidContext;
 
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
@@ -17,14 +21,14 @@ import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapFragment;
 import com.google.android.gms.maps.OnMapReadyCallback;
 
+import java.io.IOError;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-import static com.hackaton.findme.MainActivity.ACTIONS_SELECTION.values;
 
-
-public class MapActivity extends Activity implements OnMapReadyCallback, GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener, LocationListener {
+public class MapActivity extends FragmentActivity implements OnMapReadyCallback, GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener, LocationListener {
     static String REQUESTING_LOCATION_KEY;
     static String LOCATION_KEY;
     static int MY_FRIEND_ID;
@@ -34,12 +38,14 @@ public class MapActivity extends Activity implements OnMapReadyCallback, GoogleA
     Location currentLocation;
     boolean reqLocationUpdates = true;
 
+    Manager manager;
     //Variables pour Expandable menu
     ExpandableListAdapter listAdapter;
     ExpandableListView expListView;
     List<String> listDataHeader;
     private HashMap<String, List<String>> listDataChild;
     //
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,70 +60,16 @@ public class MapActivity extends Activity implements OnMapReadyCallback, GoogleA
         Bundle previousActivityBundle = getIntent().getExtras();
         MY_FRIEND_ID = previousActivityBundle.getInt("FriendId");
 
-        // Expandable menu
-        // get the listview
-        expListView = (ExpandableListView) findViewById(R.id.lvExp);
+        //CouchBase Manager
+        try {
+            manager = new Manager(new AndroidContext(this), Manager.DEFAULT_OPTIONS);
+            Log.d("Manager","Manager created");
+        } catch (IOException e) {
+            Log.e("Manager", "Cannot create manager object");
+            return;
+        }
 
-        // preparing list data
-        prepareListData();
-
-        listAdapter = new com.hackaton.findme.ExpandableListAdapter(this, listDataHeader, listDataChild);
-
-        // setting list adapter
-        expListView.setAdapter(listAdapter);
-
-        // Listview Group click listener
-        expListView.setOnGroupClickListener(new ExpandableListView.OnGroupClickListener() {
-
-            @Override
-            public boolean onGroupClick(ExpandableListView parent, View v,
-                                        int groupPosition, long id) {
-                // Toast.makeText(getApplicationContext(),
-                // "Group Clicked " + listDataHeader.get(groupPosition),
-                // Toast.LENGTH_SHORT).show();
-                return false;
-            }
-        });
-
-        // Listview Group expanded listener
-        expListView.setOnGroupExpandListener(new ExpandableListView.OnGroupExpandListener() {
-
-            @Override
-            public void onGroupExpand(int groupPosition) {
-                /*Toast.makeText(getApplicationContext(),
-                        listDataHeader.get(groupPosition) + " Expanded",
-                        Toast.LENGTH_SHORT).show();*/
-            }
-        });
-
-        // Listview Group collasped listener
-        expListView.setOnGroupCollapseListener(new ExpandableListView.OnGroupCollapseListener() {
-
-            @Override
-            public void onGroupCollapse(int groupPosition) {
-                /*Toast.makeText(getApplicationContext(),
-                        listDataHeader.get(groupPosition) + " Collapsed",
-                        Toast.LENGTH_SHORT).show();*/
-
-            }
-        });
-
-        // Listview on child click listener
-        expListView.setOnChildClickListener(new ExpandableListView.OnChildClickListener() {
-
-            @Override
-            public boolean onChildClick(ExpandableListView parent, View v,
-                                        int groupPosition, int childPosition, long id) {
-
-                // TODO: implementer une fonction switchMode() qui va modifier la listView et recalculer l'itineraire
-
-                //recollapse le menu
-                expListView.collapseGroup(0);
-
-                return false;
-            }
-        });
-        //
+        //CouchBase DB
     }
 
     protected synchronized void buildGoogleAPI() {
