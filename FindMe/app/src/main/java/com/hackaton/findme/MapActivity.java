@@ -100,7 +100,9 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback,
     }
 
     protected void stopLocUpdates() {
-        LocationServices.FusedLocationApi.removeLocationUpdates(GoogleAC, this);
+        if(GoogleAC.isConnected()) {
+            LocationServices.FusedLocationApi.removeLocationUpdates(GoogleAC, this);
+        }
     }
 
     @Override
