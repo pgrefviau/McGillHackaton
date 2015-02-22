@@ -33,20 +33,5 @@ public class MainActivity extends ActionBarActivity {
         if (id == R.id.action_settings) {
             return true;
         }
-
-<<<<<<< Updated upstream
-        return super.onOptionsItemSelected(item);
-=======
-    public void meetSomewhereClick(View view)
-    {
-        selectedAction = ACTIONS_SELECTION.MEET_SOMEWHERE;
-        startSelectContactActivity();
-    }
-
-    private void startSelectContactActivity()
-    {
-        Intent intent = new Intent(this, MapActivity.class);
-        startActivity(intent);
->>>>>>> Stashed changes
     }
 }
