@@ -26,7 +26,6 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback,
     Location currentLocation;
     boolean reqLocationUpdates = true;
 
-    static long realTime;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,7 +58,6 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback,
         if(reqLocationUpdates) {
             startRcvLocation();
         }
-        currentLocation = LocationServices.FusedLocationApi.getLastLocation(GoogleAC);
         Toast.makeText(this, "Connected to Google Play Services", Toast.LENGTH_SHORT).show();
     }
 
@@ -82,7 +80,7 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback,
     public void onMapReady(GoogleMap map) {
         map.setMapType(GoogleMap.MAP_TYPE_NORMAL);
         map.setMyLocationEnabled(true);
-        
+        //TODO: add current location as default view
     }
 
     @Override
@@ -94,7 +92,7 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback,
     /*
         TODO: Add fetching FriendId location data to plot from our location to theirs on Google Maps
     */
-    
+
     @Override
     protected void onPause(){
         super.onPause();
