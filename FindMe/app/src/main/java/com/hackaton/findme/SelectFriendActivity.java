@@ -1,26 +1,35 @@
 package com.hackaton.findme;
 
+import android.content.Intent;
+import android.graphics.Point;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.EditText;
 import android.widget.ListView;
-import android.widget.TextView;
 import android.widget.Toast;
 
-// Affiche tous les contacts de l'utilisateur dans une liste. Peut en sélectionner un.
-public class SelectFriendActivity extends ActionBarActivity{
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Random;
 
-    private ListView friendsList;
-    private String[] friendsName;
+// Affiche tous les contacts de l'utilisateur dans une liste. Peut en sélectionner un.
+public class SelectFriendActivity extends ActionBarActivity implements IUserProviderService{
+
+    private ListView friendsListView;
+    private List<BetaFriend> betaFriendsList;
+    private List<String> friendsName;
+    private DummyFriendProviderService dummyFriendProviderService = new DummyFriendProviderService();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_select_friend);
+
+        betaFriendsList = getFriendsList();
+        populateFriendsListView();  //TODO un jour: verifier que ca populate que une fois
+
         /*
         Intent intent = getIntent();
         String message = intent.getStringExtra(MainActivity.EXTRA_MESSAGE);
@@ -31,24 +40,17 @@ public class SelectFriendActivity extends ActionBarActivity{
         // Set the text view as the activity layout
         setContentView(textView);
         */
+    }
 
-        friendsList = (ListView) findViewById(R.id.friendsList);
+    public void populateFriendsListView() {
 
-        friendsName = new String[] { "jfkkjsfsf",
-                "Adapter implementation",
-                "Simple List View In Android",
-                "Create List View Android",
-                "HUHUHUHUUH",
-                "List View Source Code",
-                "List View Array Adapter",
-                "Android Example List View",
-                "Create List View Android",
-                "Android Example",
-                "List View Source Code",
-                "List View Array Adapter",
-                "CCCCUL"
-        };
+        friendsListView = (ListView) findViewById(R.id.friendsList);
 
+        // En attendant de trouver comment custom son Adapter
+        List<String> friendsName = new ArrayList<String>();
+        for (BetaFriend s : betaFriendsList) {
+            friendsName.add(s.name);
+        }
 
         // Define a new Adapter
         // First parameter - Context
@@ -61,32 +63,52 @@ public class SelectFriendActivity extends ActionBarActivity{
 
 
         // Assign adapter to ListView
-        friendsList.setAdapter(adapter);
+        friendsListView.setAdapter(adapter);
 
         // ListView Item Click Listener
-        friendsList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        friendsListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
             @Override
             public void onItemClick(AdapterView<?> parent, View view,
                                     int position, long id) {
 
-                // TODO:selon MainActivity.selectedAction, prendre infos nécessaires du selected friend and do some shits
-
+                // TODO:demander au serveur la position du selected friend. Dans un monde ideal on demanderait la permission a ce dit ami.
+                BetaFriend selectedFriend = betaFriendsList.get(position);
+                setupMapToFriend(selectedFriend);
 
                 // TODO: enlever ce feedback temporaire quand on click sur un item
                 // ListView Clicked item index
                 int itemPosition     = position;
-
                 // ListView Clicked item value
-                String  itemValue    = (String) friendsList.getItemAtPosition(position);
-
+                String  itemValue    = (String) friendsListView.getItemAtPosition(position);
                 // Show Alert
                 Toast.makeText(getApplicationContext(),
                         "Position :" + itemPosition + "  ListItem : " + itemValue, Toast.LENGTH_LONG)
                         .show();
-
             }
 
         });
+    }
+
+    private void setupMapToFriend(BetaFriend selectedFriend) {
+/*
+        Intent intent = new Intent(this, MapActivity.class);
+        Bundle bundle = new Bundle();
+        bundle.putInt("FriendId", selectedFriend.id);
+        intent.putExtras(bundle);
+        startActivity(intent);*/
+    }
+
+    public int generateRandomInt(int min, int max)
+    {
+        Random rand = new Random();
+        int randomNum = rand.nextInt((max - min) + 1) + min;
+
+        return randomNum;
+    }
+
+    @Override
+    public List<BetaFriend> getFriendsList() {
+        return dummyFriendProviderService.getFriendsList();
     }
 }
