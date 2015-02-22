@@ -107,6 +107,23 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback,
         //add sending to couchbase the new location info
     }
 
+    @Override
+    protected void onPause(){
+        super.onPause();
+        stopLocUpdates();
+    }
+
+    protected void stopLocUpdates() {
+        LocationServices.FusedLocationApi.removeLocationUpdates(GoogleAC, this);
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        if(GoogleAC.isConnected() && !reqLocationUpdates) {
+            startRcvLocation();
+        }
+    }
 
     }
 
