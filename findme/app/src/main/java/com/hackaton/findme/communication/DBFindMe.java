@@ -24,7 +24,7 @@ import java.util.Map;
 public class DBFindMe {
 
     private static final long UNI_ID = 0;
-    public static final String SyncURL = "";
+    public static final String SyncURL = "http://54.211.39.201:4984/hack19/";
     private Map<String, Object> documentContent = new HashMap<String, Object>();
     private String dbname = "FindMeDB";
     Database database;
@@ -41,7 +41,7 @@ public class DBFindMe {
 
         try {
             database = manager.getDatabase(dbname);
-            myView = database.getView("myView");
+            myView = database.getView("");
             Log.d("DB", "Database created");
         } catch (CouchbaseLiteException e) {
             Log.e("DB","Cannot get database");
@@ -66,7 +66,8 @@ public class DBFindMe {
 
     public void RetrieveUserDocs(long u_id) {
         Document retrieveDoc;
-        query = myView.createQuery();
+        query = new Query();
+        query.setReduce(true);
 
     }
 
