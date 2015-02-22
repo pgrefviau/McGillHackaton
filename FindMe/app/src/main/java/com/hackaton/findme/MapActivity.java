@@ -125,6 +125,24 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback,
         }
     }
 
+    //Save instance
+    public void onSaveInstanceState(Bundle savedInstanceState) {
+        savedInstanceState.putBoolean(REQUESTING_LOCATION_KEY, reqLocationUpdates);
+        savedInstanceState.putParcelable(LOCATION_KEY, currentLocation);
+        super.onSaveInstanceState(savedInstanceState);
+    }
+
+    //Instance value updates
+    private void updateValFromBundle(Bundle savedInstanceState) {
+        if(savedInstanceState != null) {
+            if (savedInstanceState.keySet().contains(REQUESTING_LOCATION_KEY)) {
+                reqLocationUpdates = savedInstanceState.getBoolean(REQUESTING_LOCATION_KEY);
+            }
+
+            if (savedInstanceState.keySet().contains(LOCATION_KEY)) {
+                currentLocation = savedInstanceState.getParcelable(LOCATION_KEY);
+            }
+        }
     }
 
 
