@@ -97,13 +97,6 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
         return convertView;
     }
 
-    public void switchMode(String currentMode, int indexOfSelectedMode)
-    {
-        String newMode = _listDataChild.get(_listDataHeader.get(0)).get(indexOfSelectedMode).toString();
-        _listDataChild.get(_listDataHeader.get(0)).remove(indexOfSelectedMode);  // enleve mode de la liste car rendu en header
-        _listDataChild.get(_listDataHeader.get(0)).add(indexOfSelectedMode, currentMode);
-    }
-
     @Override
     public boolean hasStableIds() {
         return false;

@@ -8,7 +8,6 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
-import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -19,7 +18,6 @@ public class SelectFriendActivity extends ActionBarActivity implements IUserProv
 
     private ListView friendsListView;
     private List<BetaFriend> betaFriendsList;
-    private List<String> friendsName;
     private DummyFriendProviderService dummyFriendProviderService = new DummyFriendProviderService();
 
     @Override
@@ -29,17 +27,6 @@ public class SelectFriendActivity extends ActionBarActivity implements IUserProv
 
         betaFriendsList = getFriendsList();
         populateFriendsListView();  //TODO un jour: verifier que ca populate que une fois
-
-        /*
-        Intent intent = getIntent();
-        String message = intent.getStringExtra(MainActivity.EXTRA_MESSAGE);
-        // Create the text view
-        TextView textView = new TextView(this);
-        textView.setTextSize(40);
-        textView.setText(message);
-        // Set the text view as the activity layout
-        setContentView(textView);
-        */
     }
 
     public void populateFriendsListView() {
@@ -73,16 +60,6 @@ public class SelectFriendActivity extends ActionBarActivity implements IUserProv
                 // TODO:demander au serveur la position du selected friend. Dans un monde ideal on demanderait la permission a ce dit ami.
                 BetaFriend selectedFriend = betaFriendsList.get(position);
                 setupMapToFriend(selectedFriend);
-/*
-                // TODO: enlever ce feedback temporaire quand on click sur un item
-                // ListView Clicked item index
-                int itemPosition     = position;
-                // ListView Clicked item value
-                String  itemValue    = (String) friendsListView.getItemAtPosition(position);
-                // Show Alert
-                Toast.makeText(getApplicationContext(),
-                        "Position :" + itemPosition + "  ListItem : " + itemValue, Toast.LENGTH_LONG)
-                        .show();*/
             }
         });
     }
@@ -94,14 +71,6 @@ public class SelectFriendActivity extends ActionBarActivity implements IUserProv
         bundle.putInt("FriendId", selectedFriend.id);
         intent.putExtras(bundle);
         startActivity(intent);
-    }
-
-    public int generateRandomInt(int min, int max)
-    {
-        Random rand = new Random();
-        int randomNum = rand.nextInt((max - min) + 1) + min;
-
-        return randomNum;
     }
 
     @Override

@@ -21,6 +21,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+import static com.hackaton.findme.MainActivity.ACTIONS_SELECTION.values;
+
 
 public class MapActivity extends Activity implements OnMapReadyCallback, GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener, LocationListener {
     static String REQUESTING_LOCATION_KEY;
@@ -82,9 +84,9 @@ public class MapActivity extends Activity implements OnMapReadyCallback, GoogleA
 
             @Override
             public void onGroupExpand(int groupPosition) {
-                Toast.makeText(getApplicationContext(),
+                /*Toast.makeText(getApplicationContext(),
                         listDataHeader.get(groupPosition) + " Expanded",
-                        Toast.LENGTH_SHORT).show();
+                        Toast.LENGTH_SHORT).show();*/
             }
         });
 
@@ -93,9 +95,9 @@ public class MapActivity extends Activity implements OnMapReadyCallback, GoogleA
 
             @Override
             public void onGroupCollapse(int groupPosition) {
-                Toast.makeText(getApplicationContext(),
+                /*Toast.makeText(getApplicationContext(),
                         listDataHeader.get(groupPosition) + " Collapsed",
-                        Toast.LENGTH_SHORT).show();
+                        Toast.LENGTH_SHORT).show();*/
 
             }
         });
@@ -107,19 +109,11 @@ public class MapActivity extends Activity implements OnMapReadyCallback, GoogleA
             public boolean onChildClick(ExpandableListView parent, View v,
                                         int groupPosition, int childPosition, long id) {
 
-                String newMode = listDataChild.get(listDataHeader.get(0)).get(childPosition).toString();
-                listDataChild.get(listDataHeader.get(0)).remove(childPosition);  // enleve mode de la liste car rendu en header
-                listDataChild.get(listDataHeader.get(0)).add(childPosition, listDataHeader.get(groupPosition));
+                // TODO: implementer une fonction switchMode() qui va modifier la listView et recalculer l'itineraire
 
-                Toast.makeText(
-                        getApplicationContext(),
-                                "Mode changed to "
-                                + listDataChild.get(
-                                listDataHeader.get(groupPosition)).get(
-                                childPosition), Toast.LENGTH_SHORT)
-                        .show();
+                //recollapse le menu
+                expListView.collapseGroup(0);
 
-                // TODO: recollapser le menu
                 return false;
             }
         });
@@ -226,17 +220,19 @@ public class MapActivity extends Activity implements OnMapReadyCallback, GoogleA
         listDataChild = new HashMap<String, List<String>>();
 
         // Adding child data
-        listDataHeader.add("Mode: "+MainActivity.selectedAction.toString());
+        listDataHeader.add(MainActivity.selectedAction.toString());
 
         // Adding child data
         List<String> options = new ArrayList<String>();
-        options.add("The Shawshank Redemption");
-        options.add("The Godfather");
-        options.add("The Godfather: Part II");
-        options.add("Pulp Fiction");
-        options.add("The Good, the Bad and the Ugly");
-        options.add("The Dark Knight");
-        options.add("12 Angry Men");
+        for (MainActivity.ACTIONS_SELECTION a : values()) {
+            if (a.toString() != listDataHeader.get(0))
+                options.add(a.toString());
+        }
+
+        options.add("Pin Location");
+        options.add("Cafe");
+        options.add("Public Places");
+        options.add("Metro Station");
 
         listDataChild.put(listDataHeader.get(0), options); // Header, Child data
         //listDataChild.put(listDataHeader.get(1), nowShowing);

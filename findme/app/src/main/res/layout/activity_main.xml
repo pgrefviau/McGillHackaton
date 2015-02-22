@@ -6,7 +6,8 @@
     android:orientation="vertical"
     android:nestedScrollingEnabled="true"
     android:weightSum="1"
-    android:gravity="bottom">
+    android:gravity="bottom"
+    android:background="#ffffffff">
 
     <FrameLayout
         android:layout_marginLeft="60dp"
@@ -21,17 +22,21 @@
         android:layout_height="wrap_content"
         android:text="@string/button_iFindYou"
         android:id="@+id/iFindYouBtn"
-        android:onClick="iFindYouClick" />
+        android:onClick="iFindYouClick"
+        android:background="@android:color/holo_blue_light" />
     <Button
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/button_youFindMe"
         android:id="@+id/youFindMeBtn"
-        android:onClick="youFindMeClick" />
+        android:onClick="youFindMeClick"
+        android:background="@android:color/holo_green_light" />
     <Button
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/button_meetSomewhere"
         android:id="@+id/meetSomewhereBtn"
-        android:onClick="meetSomewhereClick" />
+        android:onClick="meetSomewhereClick"
+        android:elegantTextHeight="false"
+        android:background="@android:color/holo_orange_light" />
 </LinearLayout>
