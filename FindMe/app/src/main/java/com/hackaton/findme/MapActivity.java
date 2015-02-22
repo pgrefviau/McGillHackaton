@@ -4,6 +4,7 @@ import android.location.Location;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.widget.Toast;
+import android.content.Intent;
 
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
@@ -18,6 +19,7 @@ import com.google.android.gms.maps.OnMapReadyCallback;
 public class MapActivity extends FragmentActivity implements OnMapReadyCallback, GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener, LocationListener {
     static String REQUESTING_LOCATION_KEY;
     static String LOCATION_KEY;
+    static int MY_FRIEND_ID;
     GoogleApiClient GoogleAC;
     MapFragment mFragment;
     LocationRequest locRequest;
@@ -34,6 +36,10 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback,
         mFragment.getMapAsync(this);
         buildGoogleAPI();
         updateValFromBundle(savedInstanceState);
+
+        //receive friendid from SelectFriend Activity
+        Bundle previousActivityBundle = getIntent().getExtras();
+        MY_FRIEND_ID = previousActivityBundle.getInt("FriendId");
     }
 
     protected synchronized void buildGoogleAPI() {
@@ -82,9 +88,13 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback,
     @Override
     public void onLocationChanged(Location location) {
         currentLocation = location;
-        //add sending to couchbase the new location info
+        //TODO: add sending to couchbase the new location info
     }
 
+    /*
+        TODO: Add fetching FriendId location data to plot from our location to theirs on Google Maps
+    */
+    
     @Override
     protected void onPause(){
         super.onPause();
