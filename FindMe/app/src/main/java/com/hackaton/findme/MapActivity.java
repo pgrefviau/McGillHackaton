@@ -185,7 +185,9 @@ public class MapActivity extends Activity implements OnMapReadyCallback, GoogleA
     }
 
     protected void stopLocUpdates() {
-        LocationServices.FusedLocationApi.removeLocationUpdates(GoogleAC, this);
+        if(GoogleAC.isConnected()) {
+            LocationServices.FusedLocationApi.removeLocationUpdates(GoogleAC, this);
+        }
     }
 
     @Override
