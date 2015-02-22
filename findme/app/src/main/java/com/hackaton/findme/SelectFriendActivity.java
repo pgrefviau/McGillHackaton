@@ -1,9 +1,9 @@
 package com.hackaton.findme;
 
+import android.app.Activity;
 import android.content.Intent;
-import android.graphics.Point;
-import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.support.v7.app.ActionBarActivity;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -14,7 +14,7 @@ import java.util.List;
 import java.util.Random;
 
 // Affiche tous les contacts de l'utilisateur dans une liste. Peut en sélectionner un.
-public class SelectFriendActivity extends ActionBarActivity implements IUserProviderService{
+public class SelectFriendActivity extends Activity implements IUserProviderService{
 
     private ListView friendsListView;
     private List<BetaFriend> betaFriendsList;
@@ -47,6 +47,7 @@ public class SelectFriendActivity extends ActionBarActivity implements IUserProv
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
                 android.R.layout.simple_list_item_1, android.R.id.text1, friendsName);
 
+
         // Assign adapter to ListView
         friendsListView.setAdapter(adapter);
 
@@ -61,6 +62,7 @@ public class SelectFriendActivity extends ActionBarActivity implements IUserProv
                 BetaFriend selectedFriend = betaFriendsList.get(position);
                 setupMapToFriend(selectedFriend);
             }
+
         });
     }
 
@@ -71,6 +73,14 @@ public class SelectFriendActivity extends ActionBarActivity implements IUserProv
         bundle.putInt("FriendId", selectedFriend.id);
         intent.putExtras(bundle);
         startActivity(intent);
+    }
+
+    public int generateRandomInt(int min, int max)
+    {
+        Random rand = new Random();
+        int randomNum = rand.nextInt((max - min) + 1) + min;
+
+        return randomNum;
     }
 
     @Override

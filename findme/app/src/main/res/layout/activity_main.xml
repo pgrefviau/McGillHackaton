@@ -28,7 +28,9 @@
         android:layout_marginLeft="5dp"
         android:layout_marginTop="5dp"
         android:layout_marginRight="5dp"
-        android:layout_marginBottom="5dp" />
+        android:layout_marginBottom="5dp"
+        android:textColor="#ffffffff"
+        android:textSize="25dp" />
     <Button
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -39,7 +41,9 @@
         android:layout_marginLeft="5dp"
         android:layout_marginRight="5dp"
         android:layout_marginTop="0dp"
-        android:layout_marginBottom="5dp" />
+        android:layout_marginBottom="5dp"
+        android:textColor="#ffffffff"
+        android:textSize="25dp" />
     <Button
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -51,5 +55,7 @@
         android:layout_marginLeft="5dp"
         android:layout_marginRight="5dp"
         android:layout_marginBottom="5dp"
-        android:layout_marginTop="0dp" />
+        android:layout_marginTop="0dp"
+        android:textColor="#ffffffff"
+        android:textSize="25dp" />
 </LinearLayout>
