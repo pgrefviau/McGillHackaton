@@ -40,28 +40,6 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback,
        GoogleAC = new GoogleApiClient.Builder(this).addConnectionCallbacks(this).addOnConnectionFailedListener(this).addApi(LocationServices.API).build();
     }
 
-    /*@Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_map, menu);
-        return true;
-    }*/
-/*
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
-
-        return super.onOptionsItemSelected(item);
-    }*/
-
     protected void createLocationRequest() {
         locRequest = new LocationRequest();
         locRequest.setInterval(5000);
@@ -81,7 +59,12 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback,
 
     @Override
     public void onConnectionSuspended(int i) {
+    }
 
+    @Override
+    public void onConnectionFailed(ConnectionResult connectionResult) {
+        int errcode = connectionResult.getErrorCode();
+        Toast.makeText(this, "The connection failed? Error Code: " + errcode, Toast.LENGTH_SHORT).show();
     }
 
     protected void startRcvLocation() {
@@ -94,11 +77,6 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback,
         map.setMapType(GoogleMap.MAP_TYPE_NORMAL);
         map.setMyLocationEnabled(true);
         
-    }
-
-    @Override
-    public void onConnectionFailed(ConnectionResult connectionResult) {
-
     }
 
     @Override
