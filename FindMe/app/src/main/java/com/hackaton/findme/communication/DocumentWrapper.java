@@ -1,4 +1,4 @@
-package com.hackaton.findme.com.hackaton.findme.communication;
+package com.hackaton.findme.communication;
 
 import com.couchbase.lite.Document;
 import com.couchbase.lite.replicator.Replication;

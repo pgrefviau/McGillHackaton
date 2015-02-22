@@ -1,4 +1,4 @@
-package com.hackaton.findme.com.hackaton.findme.users;
+package com.hackaton.findme.usermanagement;
 
 /**
  * Created by Phil on 22/02/2015.

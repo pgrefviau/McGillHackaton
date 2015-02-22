@@ -1,24 +1,19 @@
-package com.hackaton.findme.com.hackaton.findme.communication;
+package com.hackaton.findme.communication;
 
 import com.couchbase.lite.CouchbaseLiteException;
 import com.couchbase.lite.Database;
 import com.couchbase.lite.Document;
 import com.couchbase.lite.DocumentChange;
-import com.couchbase.lite.Emitter;
 import com.couchbase.lite.Manager;
-import com.couchbase.lite.Mapper;
 import com.couchbase.lite.Query;
 import com.couchbase.lite.QueryEnumerator;
-import com.couchbase.lite.QueryOptions;
-import com.couchbase.lite.View;
 import com.couchbase.lite.replicator.Replication;
-import com.hackaton.findme.com.hackaton.findme.users.UserInfo;
+import com.hackaton.findme.usermanagement.UserInfo;
 
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.Date;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 /**
