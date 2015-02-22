@@ -7,6 +7,17 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
+import com.couchbase.lite.CouchbaseLiteException;
+import com.couchbase.lite.Database;
+import com.couchbase.lite.Document;
+import com.couchbase.lite.Manager;
+import com.couchbase.lite.android.AndroidContext;
+import com.couchbase.lite.replicator.Replication;
+
+import java.io.IOException;
+import java.net.MalformedURLException;
+import java.net.URL;
+
 
 public class MainActivity extends ActionBarActivity {
 
@@ -15,11 +26,42 @@ public class MainActivity extends ActionBarActivity {
 
     public static ACTIONS_SELECTION selectedAction = ACTIONS_SELECTION.I_FIND_YOU;
 
+    private static final String SYNC_URL = "http://localhost:4984/messaging";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        Manager manager;
+        try {
+            manager = new Manager(new AndroidContext(this), Manager.DEFAULT_OPTIONS);
+            Database database = manager.getDatabase("messaging");
+            Document document = database.createDocument();
+
+            URL syncUrl;
+            try {
+                syncUrl = new URL(SYNC_URL);
+            } catch (MalformedURLException e) {
+                throw new RuntimeException(e);
+            }
+
+            Replication pullReplication = database.createPullReplication(syncUrl);
+            pullReplication.setContinuous(true);
+
+            Replication pushReplication = database.createPushReplication(syncUrl);
+            pushReplication.setContinuous(true);
+
+            pullReplication.start();
+            pushReplication.start();
+
+
+
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        } catch (CouchbaseLiteException e) {
+            throw new RuntimeException(e);
+        }
     }
 
 
