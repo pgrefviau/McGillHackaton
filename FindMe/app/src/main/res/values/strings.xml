@@ -12,4 +12,6 @@
     <string name="button_send">Send</string>
     <string name="hello_world">Hello world!</string>
     <string name="title_activity_map">MapActivity</string>
+    <string name="title_activity_respond_meeting_request">RespondMeetingRequestActivity</string>
+    <string name="title_activity_request_tracking">RequestTrackingActivity</string>
 </resources>

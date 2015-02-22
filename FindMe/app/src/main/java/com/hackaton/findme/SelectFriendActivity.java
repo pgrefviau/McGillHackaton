@@ -29,6 +29,17 @@ public class SelectFriendActivity extends ActionBarActivity implements IUserProv
 
         betaFriendsList = getFriendsList();
         populateFriendsListView();  //TODO un jour: verifier que ca populate que une fois
+
+        /*
+        Intent intent = getIntent();
+        String message = intent.getStringExtra(MainActivity.EXTRA_MESSAGE);
+        // Create the text view
+        TextView textView = new TextView(this);
+        textView.setTextSize(40);
+        textView.setText(message);
+        // Set the text view as the activity layout
+        setContentView(textView);
+        */
     }
 
     public void populateFriendsListView() {
@@ -64,7 +75,7 @@ public class SelectFriendActivity extends ActionBarActivity implements IUserProv
                 BetaFriend selectedFriend = betaFriendsList.get(position);
                 setupMapToFriend(selectedFriend);
 /*
-                // TODO: enlever ce feedback temporaire quand on click sur un item
+                /*// TODO: enlever ce feedback temporaire quand on click sur un item
                 // ListView Clicked item index
                 int itemPosition     = position;
                 // ListView Clicked item value
@@ -72,7 +83,7 @@ public class SelectFriendActivity extends ActionBarActivity implements IUserProv
                 // Show Alert
                 Toast.makeText(getApplicationContext(),
                         "Position :" + itemPosition + "  ListItem : " + itemValue, Toast.LENGTH_LONG)
-                        .show();
+                        .show();*/
             }
 
         });*/
