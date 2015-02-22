@@ -1,14 +1,24 @@
 package com.hackaton.findme;
 
+import android.app.ActionBar;
+import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Point;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.view.Display;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
+
+import java.util.Random;
 
 
-public class    MainActivity extends ActionBarActivity {
+public class MainActivity extends Activity {
 
     public final static String EXTRA_MESSAGE = "com.mycompany.myfirstapp.MESSAGE";
     public enum ACTIONS_SELECTION {I_FIND_YOU, YOU_FIND_ME, MEET_SOMEWHERE};
@@ -20,6 +30,7 @@ public class    MainActivity extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        //setButtonsSize();
     }
 
 
@@ -43,17 +54,8 @@ public class    MainActivity extends ActionBarActivity {
         }
 */
         return super.onOptionsItemSelected(item);
+
     }
-/*
-    public void sendMessage(View view)
-    {
-        Intent intent = new Intent(this, SelectContactActivity.class);
-        EditText editText = (EditText) findViewById(R.id.edit_message);
-        String message = editText.getText().toString();
-        intent.putExtra(EXTRA_MESSAGE, message);
-        startActivity(intent);
-    }
-*/
     public void iFindYouClick(View view)
     {
         selectedAction = ACTIONS_SELECTION.I_FIND_YOU;
@@ -76,5 +78,32 @@ public class    MainActivity extends ActionBarActivity {
     {
         Intent intent = new Intent(this, SelectFriendActivity.class);
         startActivity(intent);
+    }
+
+    private void setButtonsSize()
+    {
+        Display display = getWindowManager().getDefaultDisplay();
+        Point size = new Point();
+        display.getSize(size);
+        int width = size.x;
+        int height = size.y;
+
+        Button iFindYouBtn = (Button) findViewById(R.id.iFindYouBtn);
+        Button youFindMeBtn = (Button) findViewById(R.id.youFindMeBtn);
+        Button meetSomewhereBtn = (Button) findViewById(R.id.meetSomewhereBtn);
+        
+        int h = (int)(height/3.0);
+      //  h = (int) (iFindYouBtn.getLayoutParams().height / 3.0);
+
+        iFindYouBtn.setLayoutParams (new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,h));
+        youFindMeBtn.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,h));
+        meetSomewhereBtn.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,h));
+/*
+        int buttonWidth = (int) (height / 3.0);
+        LinearLayout.LayoutParams params = (ActionBar.LayoutParams) iFindYouBtn.getLayoutParams();
+        params.height = buttonWidth;
+        params.leftMargin = buttonWidth;
+        iFindYouBtn.setLayoutParams(params);*/
+
     }
 }
