@@ -44,7 +44,7 @@ public class DBFindMe {
             myView = database.getView("myView");
             Log.d("DB", "Database created");
         } catch (CouchbaseLiteException e) {
-            Log.e("DB","Cannot get databse");
+            Log.e("DB","Cannot get database");
             return;
         }
     }
