@@ -60,7 +60,6 @@ public class SelectFriendActivity extends ActionBarActivity implements IUserProv
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
                 android.R.layout.simple_list_item_1, android.R.id.text1, friendsName);
 
-
         // Assign adapter to ListView
         friendsListView.setAdapter(adapter);
 
@@ -75,7 +74,7 @@ public class SelectFriendActivity extends ActionBarActivity implements IUserProv
                 BetaFriend selectedFriend = betaFriendsList.get(position);
                 setupMapToFriend(selectedFriend);
 /*
-                /*// TODO: enlever ce feedback temporaire quand on click sur un item
+                // TODO: enlever ce feedback temporaire quand on click sur un item
                 // ListView Clicked item index
                 int itemPosition     = position;
                 // ListView Clicked item value
@@ -85,8 +84,7 @@ public class SelectFriendActivity extends ActionBarActivity implements IUserProv
                         "Position :" + itemPosition + "  ListItem : " + itemValue, Toast.LENGTH_LONG)
                         .show();*/
             }
-
-        });*/
+        });
     }
 
     private void setupMapToFriend(BetaFriend selectedFriend) {
