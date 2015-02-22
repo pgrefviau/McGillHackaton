@@ -29,17 +29,6 @@ public class SelectFriendActivity extends ActionBarActivity implements IUserProv
 
         betaFriendsList = getFriendsList();
         populateFriendsListView();  //TODO un jour: verifier que ca populate que une fois
-
-        /*
-        Intent intent = getIntent();
-        String message = intent.getStringExtra(MainActivity.EXTRA_MESSAGE);
-        // Create the text view
-        TextView textView = new TextView(this);
-        textView.setTextSize(40);
-        textView.setText(message);
-        // Set the text view as the activity layout
-        setContentView(textView);
-        */
     }
 
     public void populateFriendsListView() {
@@ -57,7 +46,6 @@ public class SelectFriendActivity extends ActionBarActivity implements IUserProv
         // Second parameter - Layout for the row
         // Third parameter - ID of the TextView to which the data is written
         // Forth - the Array of data
-
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
                 android.R.layout.simple_list_item_1, android.R.id.text1, friendsName);
 
@@ -75,7 +63,7 @@ public class SelectFriendActivity extends ActionBarActivity implements IUserProv
                 // TODO:demander au serveur la position du selected friend. Dans un monde ideal on demanderait la permission a ce dit ami.
                 BetaFriend selectedFriend = betaFriendsList.get(position);
                 setupMapToFriend(selectedFriend);
-
+/*
                 // TODO: enlever ce feedback temporaire quand on click sur un item
                 // ListView Clicked item index
                 int itemPosition     = position;
@@ -87,16 +75,16 @@ public class SelectFriendActivity extends ActionBarActivity implements IUserProv
                         .show();
             }
 
-        });
+        });*/
     }
 
     private void setupMapToFriend(BetaFriend selectedFriend) {
-/*
+
         Intent intent = new Intent(this, MapActivity.class);
         Bundle bundle = new Bundle();
         bundle.putInt("FriendId", selectedFriend.id);
         intent.putExtras(bundle);
-        startActivity(intent);*/
+        startActivity(intent);
     }
 
     public int generateRandomInt(int min, int max)
