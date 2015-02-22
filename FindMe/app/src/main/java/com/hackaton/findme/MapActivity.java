@@ -3,8 +3,12 @@ package com.hackaton.findme;
 import android.location.Location;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
+import android.util.Log;
 import android.widget.Toast;
 import android.content.Intent;
+
+import com.couchbase.lite.Manager;
+import com.couchbase.lite.android.AndroidContext;
 
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
@@ -14,6 +18,9 @@ import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapFragment;
 import com.google.android.gms.maps.OnMapReadyCallback;
+
+import java.io.IOError;
+import java.io.IOException;
 
 
 public class MapActivity extends FragmentActivity implements OnMapReadyCallback, GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener, LocationListener {
@@ -25,6 +32,8 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback,
     LocationRequest locRequest;
     Location currentLocation;
     boolean reqLocationUpdates = true;
+
+    Manager manager;
 
 
     @Override
@@ -39,6 +48,18 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback,
         //receive friendid from SelectFriend Activity
         Bundle previousActivityBundle = getIntent().getExtras();
         MY_FRIEND_ID = previousActivityBundle.getInt("FriendId");
+
+        //CouchBase Manager
+        try {
+            manager = new Manager(new AndroidContext(this), Manager.DEFAULT_OPTIONS);
+            Log.d("Manager","Manager created");
+        } catch (IOException e) {
+            Log.e("Manager", "Cannot create manager object");
+            return;
+        }
+
+        //CouchBase DB
+
     }
 
     protected synchronized void buildGoogleAPI() {

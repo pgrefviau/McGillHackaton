@@ -1,5 +1,7 @@
 package com.hackaton.findme.communication;
 
+import android.util.Log;
+
 import com.couchbase.lite.CouchbaseLiteException;
 import com.couchbase.lite.Database;
 import com.couchbase.lite.Document;
@@ -21,27 +23,37 @@ import java.util.Map;
  */
 public class LocationTrackingService implements Replication.ChangeListener{
 
+    public static final String GLOBAL_SERV_PATH = "syncURL";
+
     private UserInfo m_currentUser;
     private Map<Long, DocumentWrapper> m_userIdToPositionAsDocument = new HashMap<>();
     private Database m_locationDatabase;
 
-    private static final String LOCATION_DB_NAME = "user_locations";
+    private static final String LOCATION_DB_NAME = "findmedb";
     private static final String LOCATION_PROPERTY_KEY = "location";
     private static final String LAST_UPDATE_TIME_PROPERTY_KEY = "last_update_date";
     private static final String USER_ID_PROPERTY_KEY = "user_id";
 
-    public LocationTrackingService(Manager manager, String serverPath, UserInfo user) throws CouchbaseLiteException {
+    public LocationTrackingService(Manager manager, UserInfo user) throws CouchbaseLiteException {
 
-        m_locationDatabase = manager.getDatabase(LOCATION_DB_NAME);
+        if(!Manager.isValidDatabaseName(LOCATION_DB_NAME)){
+            Log.e("DB", "Bad database name");
+            return;
+        }
+
+        try {
+            m_locationDatabase = manager.getDatabase(LOCATION_DB_NAME);
+        } catch (CouchbaseLiteException e) {
+            Log.e("DB", "Cannot get DB");
+            return;
+        }
         m_currentUser = user;
         URL url = null;
         try {
-            url = new URL(serverPath + "\\" + LOCATION_DB_NAME);
+            url = new URL(GLOBAL_SERV_PATH + "/" + LOCATION_DB_NAME);
         } catch (MalformedURLException e) {
-
+            e.printStackTrace();
         }
-
-
 
         Replication push = m_locationDatabase.createPushReplication(url);
         push.setContinuous(true);
@@ -55,7 +67,7 @@ public class LocationTrackingService implements Replication.ChangeListener{
         long targetUserId = user.get_id();
         if(!m_userIdToPositionAsDocument.containsKey(targetUserId))
         {
-            m_userIdToPositionAsDocument.put( targetUserId, new DocumentWrapper(getUserLocationAsDocument(user)));
+            m_userIdToPositionAsDocument.put(targetUserId, new DocumentWrapper(getUserLocationAsDocument(user)));
         }
 
         return m_userIdToPositionAsDocument.get(targetUserId).get_document();
