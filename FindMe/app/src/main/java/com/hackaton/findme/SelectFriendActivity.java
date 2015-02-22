@@ -76,7 +76,7 @@ public class SelectFriendActivity extends ActionBarActivity implements IUserProv
                 BetaFriend selectedFriend = betaFriendsList.get(position);
                 setupMapToFriend(selectedFriend);
 
-                // TODO: enlever ce feedback temporaire quand on click sur un item
+                /*// TODO: enlever ce feedback temporaire quand on click sur un item
                 // ListView Clicked item index
                 int itemPosition     = position;
                 // ListView Clicked item value
@@ -84,19 +84,19 @@ public class SelectFriendActivity extends ActionBarActivity implements IUserProv
                 // Show Alert
                 Toast.makeText(getApplicationContext(),
                         "Position :" + itemPosition + "  ListItem : " + itemValue, Toast.LENGTH_LONG)
-                        .show();
+                        .show();*/
             }
 
         });
     }
 
     private void setupMapToFriend(BetaFriend selectedFriend) {
-/*
+
         Intent intent = new Intent(this, MapActivity.class);
         Bundle bundle = new Bundle();
         bundle.putInt("FriendId", selectedFriend.id);
         intent.putExtras(bundle);
-        startActivity(intent);*/
+        startActivity(intent);
     }
 
     public int generateRandomInt(int min, int max)
