@@ -2,7 +2,6 @@ package com.hackaton.findme;
 
 import android.location.Location;
 import android.os.Bundle;
-import android.os.SystemClock;
 import android.support.v4.app.FragmentActivity;
 import android.widget.Toast;
 
@@ -11,17 +10,19 @@ import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.location.LocationListener;
 import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationServices;
-import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapFragment;
 import com.google.android.gms.maps.OnMapReadyCallback;
-import com.google.android.gms.common.api.GoogleApiClient;
+
 
 public class MapActivity extends FragmentActivity implements OnMapReadyCallback, GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener, LocationListener {
+    static String REQUESTING_LOCATION_KEY;
+    static String LOCATION_KEY;
     GoogleApiClient GoogleAC;
     MapFragment mFragment;
     LocationRequest locRequest;
     Location currentLocation;
+    boolean reqLocationUpdates = true;
 
     static long realTime;
 
@@ -32,6 +33,7 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback,
         mFragment = (MapFragment) getFragmentManager().findFragmentById(R.id.map);
         mFragment.getMapAsync(this);
         buildGoogleAPI();
+        updateValFromBundle(savedInstanceState);
     }
 
     protected synchronized void buildGoogleAPI() {
@@ -70,8 +72,9 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback,
     @Override
     public void onConnected(Bundle connectionHint) {
         createLocationRequest();
-        startRcvLocation();
-
+        if(reqLocationUpdates) {
+            startRcvLocation();
+        }
         currentLocation = LocationServices.FusedLocationApi.getLastLocation(GoogleAC);
         Toast.makeText(this, "Connected to Google Play Services", Toast.LENGTH_SHORT).show();
     }
@@ -100,6 +103,12 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback,
 
     @Override
     public void onLocationChanged(Location location) {
+        currentLocation = location;
+        //add sending to couchbase the new location info
+    }
+
 
     }
+
+
 }
