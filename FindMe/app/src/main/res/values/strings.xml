@@ -1,6 +1,13 @@
 <resources>
     <string name="app_name">FindMe</string>
-
-    <string name="hello_world">Hello world!</string>
+    <string name="edit_message">Enter a message</string>
+    <string name="button_iFindYou">I Find You</string>
+    <string name="button_youFindMe">You Find Me</string>
+    <string name="button_meetSomewhere">Lets Meet Somewhere</string>
     <string name="action_settings">Settings</string>
+    <string name="title_activity_main">MainActivity</string>
+    <string name="title_activity_select_contact">SelectContactActivity</string>
+
+    <string name="button_send">Send</string>
+    <string name="hello_world">Hello world!</string>
 </resources>
