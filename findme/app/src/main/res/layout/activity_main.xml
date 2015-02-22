@@ -7,11 +7,12 @@
     android:nestedScrollingEnabled="true"
     android:weightSum="1"
     android:gravity="bottom"
-    android:background="#ffffffff">
+    android:background="#ffffffff"
+    android:dividerPadding="0dp">
 
     <FrameLayout
-        android:layout_marginLeft="60dp"
-        android:layout_marginRight="60dp"
+        android:layout_marginLeft="80dp"
+        android:layout_marginRight="80dp"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_weight="1.03"
@@ -23,14 +24,22 @@
         android:text="@string/button_iFindYou"
         android:id="@+id/iFindYouBtn"
         android:onClick="iFindYouClick"
-        android:background="@android:color/holo_blue_light" />
+        android:background="@android:color/holo_blue_light"
+        android:layout_marginLeft="5dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginRight="5dp"
+        android:layout_marginBottom="5dp" />
     <Button
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/button_youFindMe"
         android:id="@+id/youFindMeBtn"
         android:onClick="youFindMeClick"
-        android:background="@android:color/holo_green_light" />
+        android:background="@android:color/holo_green_light"
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="5dp"
+        android:layout_marginTop="0dp"
+        android:layout_marginBottom="5dp" />
     <Button
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -38,5 +47,9 @@
         android:id="@+id/meetSomewhereBtn"
         android:onClick="meetSomewhereClick"
         android:elegantTextHeight="false"
-        android:background="@android:color/holo_orange_light" />
+        android:background="@android:color/holo_orange_light"
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="5dp"
+        android:layout_marginBottom="5dp"
+        android:layout_marginTop="0dp" />
 </LinearLayout>
